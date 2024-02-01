@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name="py_spoo_url",
-    version="0.0.2",
+    version="0.0.1",
     description="Simple URL shortening with advanced analytics, emoji aliases, and more using spoo.me.",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -17,10 +17,7 @@ setup(
     install_requires=[
         "matplotlib",
         "requests",
-        "json",
-        "datetime",
         "geopandas",
-        "mpl_toolkits",
         "pandas",
         "openpyxl"
     ],

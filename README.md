@@ -1,0 +1,272 @@
+<p align=center>
+    <img src="https://raw.githubusercontent.com/spoo-me/py_spoo_url/main/assets/py_spoo_url.png" height="50px" alt="py_spoo_url banner">
+</p>
+
+<br>
+
+<p align=center>
+
+![PyPI](https://img.shields.io/pypi/v/py_spoo_url?style=flat-square)
+![Python](https://img.shields.io/pypi/pyversions/py_spoo_url?style=flat-square)
+![License](https://img.shields.io/pypi/l/py_spoo_url?style=flat-square)
+</p>
+
+---
+
+## 🚀 Simple URL shortening with advanced analytics, emoji aliases, and more using spoo.me
+
+<details>
+<summary>📖 Table of Contents</summary>
+
+- [🚀 Simple URL shortening with advanced analytics, emoji aliases, and more using spoo.me](#-simple-url-shortening-with-advanced-analytics-emoji-aliases-and-more-using-spoome)
+- [📦 Installing](#-installing)
+- [📥 Importing](#-importing)
+- [✂️ Shortening URL](#️-shortening-url)
+  - [For Non-emoji aliases](#for-non-emoji-aliases)
+  - [😎 For Emoji aliases](#-for-emoji-aliases)
+- [📊 URL Statistics](#-url-statistics)
+  - [🔧 Initializing the class](#-initializing-the-class)
+  - [👀 Viewing the Basic Statistics](#-viewing-the-basic-statistics)
+  - [](#)
+    - [Example Usage](#example-usage)
+  - [📈 Generating Insightful Charts](#-generating-insightful-charts)
+  - [](#-1)
+    - [Valid Data that can be passed to make the chart](#valid-data-that-can-be-passed-to-make-the-chart)
+    - [Valid Chart types](#valid-chart-types)
+    - [Usage Example](#usage-example)
+- [📤 Exporting Stats Data](#-exporting-stats-data)
+- [🧳 Dependencies](#-dependencies)
+- [🚨 Error Codes](#-error-codes)
+- [🤝 Support and Issues](#-support-and-issues)
+- [🤗 Contributing](#-contributing)
+- [📜 Licence](#-licence)
+
+</details>
+
+---
+
+## 📦 Installing
+
+You can install this package using pip:
+
+```bash
+pip install py_spoo_url
+```
+
+---
+
+## 📥 Importing
+
+```python
+from py_spoo_url import Shorten, Statistics
+```
+
+## ✂️ Shortening URL
+
+### For Non-emoji aliases
+
+```python
+shortener = Shortener()
+long_url = "https://www.example.com"
+short_url = shortener.shorten(long_url, password="SuperSecretPassword@444", max_clicks=100)
+# for custom alias, put `alias=<your_choice>`
+
+print(f"Shortened URL: {short_url}")
+```
+
+### 😎 For Emoji aliases
+
+```python
+shortener = Shortener()
+long_url = "https://www.example.com"
+emoji_url = shorten.emojify(long_url) # pass password and max-clicks as shown above if you want
+# for custom emoji alias, put `emoji_alias=<random_emoji_sequence>`
+
+print(f"Emojified URL: {emoji_url}")
+```
+
+**Note:** The emoji sequence must contain actual emojies like `😆🤯...`
+
+---
+
+## 📊 URL Statistics
+
+The Statistics class enables you to retrieve detailed statistics for a given short code.
+
+### 🔧 Initializing the class
+
+```python
+from spoo_me import Statistics
+
+# Initialize Statistics with a short code
+stats = Statistics(short_code="ga") # replace with the shortcode you want
+# if the shortUrl is password protected you have to pass the password too
+```
+
+### 👀 Viewing the Basic Statistics
+
+```python
+print(f"Total Clicks: {stats.total_clicks}")
+print(f"Total Unique Clicks: {stats.total_unique_clicks}")
+print(f"Average Daily Clicks: {stats.average_daily_clicks}")
+print(f"Clicks Analysis: {stats.clicks_analysis}")
+print(f"Browser Analysis: {stats.browsers_analysis}")
+# ... and more (details below)
+```
+
+<details>
+
+<summary> List of the analytics you can access </summary>
+
+###
+
+| **Method/Attribute** | **Description** |
+|------------------------------------|---------------------------------------------------------|
+| total_clicks | Total number of clicks on the short URL. |
+| total_unique_clicks | Total number of unique clicks on the short URL. |
+| average_daily_clicks | Average number of clicks per day. |
+| average_monthly_clicks | Average number of clicks per month. |
+| average_weekly_clicks | Average number of clicks per week. |
+| last_click | Information about the last click on the short URL. |
+| last_click_browser | Browser used for the last click. |
+| last_click_platform | Operating system used for the last click. |
+| created_at | Date when the short URL was created. |
+| creation_time | Time of day when the short URL was created. |
+| browsers_analysis | Analysis of browsers used for clicks. |
+| platforms_analysis | Analysis of operating systems used for clicks. |
+| country_analysis | Analysis of countries from which clicks originated. |
+| referrers_analysis | Analysis of referrers (sources) of clicks. |
+| clicks_analysis | Detailed analysis of daily clicks. |
+| unique_browsers_analysis | Analysis of unique browsers used for clicks. |
+| unique_platforms_analysis | Analysis of unique operating systems for clicks. |
+| unique_country_analysis | Analysis of unique countries from which clicks originated. |
+| unique_referrers_analysis | Analysis of unique referrers (sources) of clicks. |
+| unique_clicks_analysis | Detailed analysis of daily unique clicks. |
+| expired | Indicates if the short URL has expired. |
+| password | Password associated with the short URL (if any). |
+
+#### Example Usage
+
+```python
+print(f"Creation Time: {stats.creation_time}")
+```
+
+</details>
+
+### 📈 Generating Insightful Charts
+
+```python
+plt = stats.make_chart(stats.browsers_analysis, chart_type="bar") # this returns an object of matplotlib
+plt.show()
+
+# ... and more (see below)
+
+# generating countries heatmaps
+plt = stats.make_countries_heatmap()
+plt.show()
+
+plt = stats.make_unique_countries_heatmap()
+plt.show()
+```
+
+<details>
+<summary> List of Available Charts </summary>
+
+###
+
+| Method | Description |
+|--------------------------|---------------------------------------------------------|
+| make_chart | Create various types of charts based on the data provided. |
+
+| Parameters | Description |
+|--------------------------|---------------------------------------------------------|
+| data | Type of data to visualize (e.g., stats.browsers_analysis, see below). |
+| chart_type | Type of chart to create (e.g., "bar", "pie", "line", see below). |
+| days | Number of days to consider for time-based analysis. (only for `last_n_days_analysis` and `last_n_days_unique_analysis`) |
+
+#### Valid Data that can be passed to make the chart
+
+- `stats.browsers_analysis`
+- `stats.platforms_analysis`
+- `stats.country_analysis`
+- `stats.referrers_analysis`
+- `stats.clicks_analysis`
+- `stats.unique_browsers_analysis`
+- `stats.unique_platforms_analysis`
+- `stats.unique_country_analysis`
+- `stats.unique_referrers_analysis`
+- `stats.unique_clicks_analysis`
+- `stats.last_n_days_analysis`
+- `stats.last_n_days_unique_analysis`
+
+#### Valid Chart types
+
+- bar
+- pie
+- line
+- scatter
+- hist
+- box
+- area
+
+#### Usage Example
+
+```python
+plt = stats.make_chart(stats.browsers_analysis, chart_type="bar")
+plt.show()
+```
+
+</details>
+
+## 📤 Exporting Stats Data
+
+You can export the statistical data to various file formats, including Excel, CSV, and JSON:
+
+```python
+# Export data to Excel
+stats.export_data(filename="stats_export.xlsx", filetype="xlsx")
+
+# Export data to CSV and compress into a ZIP file
+stats.export_data(filename="stats_export", filetype="csv")
+
+# Export data to Json
+stats.export_data(filename="stats_export.json", filetypes="json")
+```
+
+---
+
+## 🧳 Dependencies
+
+- `matplotlib`: For creating charts and visualizations.
+- `requests`: For making HTTP requests to the Spoo.me API.
+- `pandas`: For handling and manipulating data in tabular form. 🐼
+- `geopandas`: For creating geographical visualizations. 🌎
+
+**All of the dependencies are automatically installed while installing the package but in case of any errors, you can install all of the dependencies listed in the `requirements.txt` file.**
+
+## 🚨 Error Codes
+
+To see the error codes returned by the API, please visit [https://spoo.me/api](https://spoo.me/api)
+
+## 🤝 Support and Issues
+
+If you encounter any issues or have questions about using the Spoo.me Python package, please open an issue on the GitHub repository.
+
+## 🤗 Contributing
+
+Contributions are welcome! If you have ideas for improvements or new features, feel free to fork the repository, make your changes, and submit a pull request
+
+## 📜 Licence
+
+This package is licensed under the MIT License - see the LICENSE file for details.
+
+---
+![Downloads](https://img.shields.io/pypi/dm/py_spoo_url?style=flat-square)
+![GitHub Issues](https://img.shields.io/github/issues/spoo-me/py_spoo_url?style=flat-square)
+![GitHub Stars](https://img.shields.io/github/stars/spoo-me/py_spoo_url?style=flat-square)
+![GitHub Forks](https://img.shields.io/github/forks/spoo-me/py_spoo_url?style=flat-square)
+![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)
+![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)
+![Last Commit](https://img.shields.io/github/last-commit/spoo-me/py_spoo_url?style=flat-square)
+
+---

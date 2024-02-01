@@ -1,0 +1,7 @@
+matplotlib
+requests
+json
+datetime
+geopandas
+mpl_toolkits
+openpyxl

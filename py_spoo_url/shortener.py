@@ -4,7 +4,7 @@ import json
 class Shortener:
     def __init__(self):
         self.short_code = None
-        self.url = "https://spoo.me"
+        self._url = "https://spoo.me"
 
     def shorten(
         self,
@@ -25,7 +25,7 @@ class Shortener:
 
         headers = {"Accept": "application/json"}
 
-        r = requests.post(self.url, data=payload, headers=headers)
+        r = requests.post(self._url, data=payload, headers=headers)
 
         if r.status_code == 200:
             response = json.loads(r.text)
@@ -53,7 +53,7 @@ class Shortener:
 
         headers = {"Accept": "application/json"}
 
-        r = requests.post(f"{self.url}/emoji", data=payload, headers=headers)
+        r = requests.post(f"{self._url}/emoji", data=payload, headers=headers)
 
         if r.status_code == 200:
             response = json.loads(r.text)

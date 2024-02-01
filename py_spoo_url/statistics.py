@@ -15,11 +15,12 @@ class Statistics:
         short_code = short_code.split("/")[-1]
         self.short_code = short_code
         self.password = password
-
+        self._url = "https://spoo.me/stats/"
+        
         self.get()
 
     def get(self):
-        url = f"https://spoo.me/stats/{self.short_code}"
+        url = f"{self._url}{self.short_code}"
 
         params = {"password": self.password} if self.password else None
 
@@ -302,7 +303,7 @@ class Statistics:
         df_general_info = pd.DataFrame({
             'TOTAL CLICKS': [self.data['total-clicks']],
             'TOTAL UNIQUE CLICKS': [self.data['total_unique_clicks']],
-            'URL': [self.data['url']],
+            '': [self.data['url']],
             'SHORT CODE': [self.data['_id']],
             'MAX CLICKS': [self.data['max-clicks']],
             "PASSWORD": [self.data['password']],

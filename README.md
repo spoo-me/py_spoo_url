@@ -2,23 +2,14 @@
     <img src="https://raw.githubusercontent.com/spoo-me/py_spoo_url/main/assets/py_spoo_url.png" height="50px" alt="py_spoo_url banner">
 </p>
 
+
+### 🚀 Simple URL shortening with advanced analytics, emoji aliases, and more using spoo.me
+
 <br>
-
-<p align=center>
-
-![PyPI](https://img.shields.io/pypi/v/py_spoo_url?style=flat-square)
-![Python](https://img.shields.io/pypi/pyversions/py_spoo_url?style=flat-square)
-![License](https://img.shields.io/pypi/l/py_spoo_url?style=flat-square)
-</p>
-
----
-
-## 🚀 Simple URL shortening with advanced analytics, emoji aliases, and more using spoo.me
 
 <details>
 <summary>📖 Table of Contents</summary>
 
-- [🚀 Simple URL shortening with advanced analytics, emoji aliases, and more using spoo.me](#-simple-url-shortening-with-advanced-analytics-emoji-aliases-and-more-using-spoome)
 - [📦 Installing](#-installing)
 - [📥 Importing](#-importing)
 - [✂️ Shortening URL](#️-shortening-url)
@@ -261,12 +252,20 @@ Contributions are welcome! If you have ideas for improvements or new features, f
 This package is licensed under the MIT License - see the LICENSE file for details.
 
 ---
+![PyPI](https://img.shields.io/pypi/v/py_spoo_url?style=flat-square)
 ![Downloads](https://img.shields.io/pypi/dm/py_spoo_url?style=flat-square)
-![GitHub Issues](https://img.shields.io/github/issues/spoo-me/py_spoo_url?style=flat-square)
-![GitHub Stars](https://img.shields.io/github/stars/spoo-me/py_spoo_url?style=flat-square)
-![GitHub Forks](https://img.shields.io/github/forks/spoo-me/py_spoo_url?style=flat-square)
 ![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)
-![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)
 ![Last Commit](https://img.shields.io/github/last-commit/spoo-me/py_spoo_url?style=flat-square)
 
 ---
+
+<h6 align="center">
+<img src="https://spoo.me/static/images/favicon.png" height=30>
+<br>
+© spoo.me . 2024
+
+All Rights Reserved</h6>
+
+<p align="center">
+	<a href="https://github.com/spoo-me/py_spoo_url/blob/master/LICENSE.txt"><img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=MIT&logoColor=d9e0ee&colorA=363a4f&colorB=b7bdf8"/></a>
+</p>

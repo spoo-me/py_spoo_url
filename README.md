@@ -147,7 +147,7 @@ print(f"Creation Time: {stats.creation_time}")
 ### 📈 Generating Insightful Charts
 
 ```python
-plt = stats.make_chart(stats.browsers_analysis, chart_type="bar") # this returns an object of matplotlib
+plt = stats.make_chart(data="browsers_analysis", chart_type="bar") # this returns an object of matplotlib
 plt.show()
 
 # ... and more (see below)
@@ -171,39 +171,39 @@ plt.show()
 
 | Parameters | Description |
 |--------------------------|---------------------------------------------------------|
-| data | Type of data to visualize (e.g., stats.browsers_analysis, see below). |
+| data | Type of data to visualize (e.g., 'browsers_analysis', see below). |
 | chart_type | Type of chart to create (e.g., "bar", "pie", "line", see below). |
 | days | Number of days to consider for time-based analysis. (only for `last_n_days_analysis` and `last_n_days_unique_analysis`) |
 
 #### Valid Data that can be passed to make the chart
 
-- `stats.browsers_analysis`
-- `stats.platforms_analysis`
-- `stats.country_analysis`
-- `stats.referrers_analysis`
-- `stats.clicks_analysis`
-- `stats.unique_browsers_analysis`
-- `stats.unique_platforms_analysis`
-- `stats.unique_country_analysis`
-- `stats.unique_referrers_analysis`
-- `stats.unique_clicks_analysis`
-- `stats.last_n_days_analysis`
-- `stats.last_n_days_unique_analysis`
+- `'browsers_analysis'`
+- `'platforms_analysis'`
+- `'country_analysis'`
+- `'referrers_analysis'`
+- `'clicks_analysis'`
+- `'unique_browsers_analysis'`
+- `'unique_platforms_analysis'`
+- `'unique_country_analysis'`
+- `'unique_referrers_analysis'`
+- `'unique_clicks_analysis'`
+- `'last_n_days_analysis'`
+- `'last_n_days_unique_analysis'`
 
 #### Valid Chart types
 
-- bar
-- pie
-- line
-- scatter
-- hist
-- box
-- area
+- 'bar'
+- 'pie'
+- 'line'
+- 'scatter'
+- 'hist'
+- 'box'
+- 'area'
 
 #### Usage Example
 
 ```python
-plt = stats.make_chart(stats.browsers_analysis, chart_type="bar")
+plt = stats.make_chart('browsers_analysis', chart_type="bar")
 plt.show()
 ```
 

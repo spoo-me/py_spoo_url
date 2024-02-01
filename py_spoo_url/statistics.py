@@ -66,30 +66,38 @@ class Statistics:
         else:
             raise Exception(f"Error {r.status_code}: {r.text}")
 
-    def validate_data(self, data):
-        valid_data = [
-            self.browsers_analysis,
-            self.platforms_analysis,
-            self.country_analysis,
-            self.referrers_analysis,
-            self.clicks_analysis,
-            self.unique_browsers_analysis,
-            self.unique_platforms_analysis,
-            self.unique_country_analysis,
-            self.unique_referrers_analysis,
-            self.unique_clicks_analysis,
-            self.last_n_days_analysis,
-            self.last_n_days_unique_analysis,
-        ]
-
-        if data not in valid_data:
-            raise Exception(
-                "Invalid data type. Valid data types are: {}".format(valid_data)
-            )
-
-    def make_chart(self, data, chart_type: str = "bar", days: int=7, **kwargs):
-
-        self.validate_data(data)
+    def make_chart(self, data: Literal[
+        'browsers_analysis',
+        'platforms_analysis',
+        'country_analysis',
+        'referrers_analysis',
+        'clicks_analysis',
+        'unique_browsers_analysis',
+        'unique_platforms_analysis',
+        'unique_country_analysis',
+        'unique_referrers_analysis',
+        'unique_clicks_analysis',
+        'last_n_days_analysis',
+        'last_n_days_unique_analysis'
+    ], chart_type: Literal['bar', 'pie', 'line', 'scatter', 'hist', 'box', 'area']='bar', days:int=7, **kwargs):
+        data_methods = {
+            'browsers_analysis': self.browsers_analysis,
+            'platforms_analysis': self.platforms_analysis,
+            'country_analysis': self.country_analysis,
+            'referrers_analysis': self.referrers_analysis,
+            'clicks_analysis': self.clicks_analysis,
+            'unique_browsers_analysis': self.unique_browsers_analysis,
+            'unique_platforms_analysis': self.unique_platforms_analysis,
+            'unique_country_analysis': self.unique_country_analysis,
+            'unique_referrers_analysis': self.unique_referrers_analysis,
+            'unique_clicks_analysis': self.unique_clicks_analysis,
+            'last_n_days_analysis': self.last_n_days_analysis,
+            'last_n_days_unique_analysis': self.last_n_days_unique_analysis
+        }
+        try:
+            data = data_methods[data]
+        except KeyError:
+            raise ValueError("Invalid data type. Valid data types are: {}".format(list(data_methods.keys())))
 
         if data == self.last_n_days_analysis or data == self.last_n_days_unique_analysis:
             data = data(days=days)
@@ -111,7 +119,7 @@ class Statistics:
         elif chart_type == "area":
             plt.stackplot(data.keys(), data.values(), **kwargs)
         else:
-            raise Exception("Invalid chart type. Valid chart types are: bar, pie")
+            raise Exception("Invalid chart type. Valid chart types are: bar, pie, line, scatter, hist, box, area")
 
         return plt
 
@@ -227,7 +235,7 @@ class Statistics:
         elif filetype == "csv":
             self.export_to_csv(filename)
         else:
-            raise ValueError("Invalid file type. Choose either 'csv' or 'xlsx'.")
+            raise ValueError("Invalid file type. Choose either 'csv', 'json' or 'xlsx'.")
 
     def export_to_excel(self, filename:str = "export.xlsx"):
 

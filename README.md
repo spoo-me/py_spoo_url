@@ -25,6 +25,7 @@
     - [Valid Data that can be passed to make the chart](#valid-data-that-can-be-passed-to-make-the-chart)
     - [Valid Chart types](#valid-chart-types)
     - [Usage Example](#usage-example)
+    - [👀 Heatmap Preview](#-heatmap-preview)
 - [📤 Exporting Stats Data](#-exporting-stats-data)
 - [🧳 Dependencies](#-dependencies)
 - [🚨 Error Codes](#-error-codes)
@@ -208,6 +209,10 @@ plt.show()
 ```
 
 </details>
+
+#### 👀 Heatmap Preview
+
+<img src="https://raw.githubusercontent.com/spoo-me/py_spoo_url/main/assets/heatmap-example.png" alt="Heatmap Example Image">
 
 ## 📤 Exporting Stats Data
 

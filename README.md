@@ -155,10 +155,10 @@ plt.show()
 
 # generating countries heatmaps
 plt = stats.make_countries_heatmap()
-plt.show()
+plt.savefig("heatmap.png", format="png", bbox_inches="tight", pad_inches=0.5, dpi=300,)
 
 plt = stats.make_unique_countries_heatmap()
-plt.show()
+plt.savefig("unique_heatmap.png", format="png", bbox_inches="tight", pad_inches=0.5, dpi=300,)
 ```
 
 <details>

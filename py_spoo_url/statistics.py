@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import requests
 import json
 from datetime import datetime, timedelta
@@ -100,6 +101,9 @@ class Statistics:
         except KeyError:
             raise ValueError("Invalid data type. Valid data types are: {}".format(list(data_methods.keys())))
 
+        matplotlib.rcParams['font.size'] = 15
+        matplotlib.rcParams['axes.labelcolor'] = "Black"
+
         if data == self.last_n_days_analysis or data == self.last_n_days_unique_analysis:
             data = data(days=days)
 
@@ -124,7 +128,10 @@ class Statistics:
 
         return plt
 
-    def make_countries_heatmap(self, cmap: Literal["YlOrRd", "viridis", "plasma", "inferno"] = "YlOrRd"):
+    def make_countries_heatmap(self, cmap: Literal["YlOrRd", "viridis", "plasma", "inferno", "RdPu_r"] = "YlOrRd"):
+        matplotlib.rcParams['font.size'] = 15
+        matplotlib.rcParams['axes.labelcolor'] = "White"
+
         world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
         world = world.merge(
@@ -134,8 +141,17 @@ class Statistics:
             right_on='Country'
         )
 
+        plt.figure(figsize=(15, 10), dpi=100)
+        plt.subplots_adjust(left=0.05, right=0.95, bottom=0.05, top=0.95)
+
         # Create a figure and axis
-        fig, ax = plt.subplots(1, 1, figsize=(15, 10))
+        fig, ax = plt.subplots(1, 1, figsize=(15, 10), facecolor=(32/255, 34/255, 37/255, 0.5))
+
+        for spine in ax.spines.values():
+            spine.set_color((46/255, 48/255, 53/255))
+            spine.set_linewidth(2)
+
+        ax.tick_params(labelcolor='white')
 
         # Plot the world map
         world.boundary.plot(ax=ax, linewidth=1)
@@ -143,15 +159,21 @@ class Statistics:
         cax = divider.append_axes("right", size="5%", pad=0.1)
 
         # Plot the heatmap
-        world.plot(column='Value', ax=ax, legend=True, cax=cax, cmap=cmap, legend_kwds={'label': "Values"})
+        p = world.plot(column='Value', ax=ax, legend=True, cax=cax, cmap=cmap, edgecolor=None, legend_kwds={'label': "Clicks",}, alpha=0.9)
+        p.set_facecolor((32/255, 34/255, 37/255, 0.5))
+        cbax = cax
+        cbax.tick_params(labelcolor='white')
 
         # Set plot title
-        plt.title('Countries Heatmap')
+        plt.suptitle('Countries Heatmap', x=0.5, y=0.82, fontsize=20, fontweight=3, color='white')
 
         # Show the plot
         return plt
 
-    def make_unique_countries_heatmap(self, cmap: Literal["YlOrRd", "viridis", "plasma", "inferno"] = "YlOrRd"):
+    def make_unique_countries_heatmap(self, cmap: Literal["YlOrRd", "viridis", "plasma", "inferno", "RdPu_r"] = "YlOrRd"):
+        matplotlib.rcParams['font.size'] = 15
+        matplotlib.rcParams['axes.labelcolor'] = "White"
+
         world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
         world = world.merge(
@@ -161,8 +183,17 @@ class Statistics:
             right_on='Country'
         )
 
+        plt.figure(figsize=(15, 10), dpi=100)
+        plt.subplots_adjust(left=0.05, right=0.95, bottom=0.05, top=0.95)
+
         # Create a figure and axis
-        fig, ax = plt.subplots(1, 1, figsize=(15, 10))
+        fig, ax = plt.subplots(1, 1, figsize=(15, 10), facecolor=(32/255, 34/255, 37/255, 0.5))
+
+        for spine in ax.spines.values():
+            spine.set_color((46/255, 48/255, 53/255))
+            spine.set_linewidth(2)
+
+        ax.tick_params(labelcolor='white')
 
         # Plot the world map
         world.boundary.plot(ax=ax, linewidth=1)
@@ -170,10 +201,13 @@ class Statistics:
         cax = divider.append_axes("right", size="5%", pad=0.1)
 
         # Plot the heatmap
-        world.plot(column='Value', ax=ax, legend=True, cax=cax, cmap=cmap, legend_kwds={'label': "Values"})
+        p = world.plot(column='Value', ax=ax, legend=True, cax=cax, cmap=cmap, edgecolor=None, legend_kwds={'label': "Clicks",}, alpha=0.9)
+        p.set_facecolor((32/255, 34/255, 37/255, 0.5))
+        cbax = cax
+        cbax.tick_params(labelcolor='white')
 
         # Set plot title
-        plt.title('Countries Heatmap')
+        plt.suptitle('Unique Countries Heatmap', x=0.5, y=0.82, fontsize=20, fontweight=3, color='white')
 
         # Show the plot
         return plt

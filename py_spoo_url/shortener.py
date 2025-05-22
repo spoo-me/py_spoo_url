@@ -20,7 +20,7 @@ class Shortener:
         if password:
             payload["password"] = password
         if max_clicks:
-            payload["max_clicks"] = str(max_clicks)
+            payload["max-clicks"] = str(max_clicks)
         if alias:
             payload["alias"] = alias
 
@@ -47,7 +47,7 @@ class Shortener:
         if password:
             payload["password"] = password
         if max_clicks:
-            payload["max_clicks"] = str(max_clicks)
+            payload["max-clicks"] = str(max_clicks)
         if emoji_alias:
             payload["emojies"] = emoji_alias
 

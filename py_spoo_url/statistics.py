@@ -124,7 +124,11 @@ class Statistics:
 
         if chart_type == "bar":
             plt.bar(chart_data.keys(), chart_data.values(), **kwargs)
-            if data in ["last_n_days_analysis", "clicks_analysis", "unique_clicks_analysis"]:
+            if data in [
+                "last_n_days_analysis",
+                "clicks_analysis",
+                "unique_clicks_analysis",
+            ]:
                 plt.xticks(rotation=90)
         elif chart_type == "pie":
             plt.pie(chart_data.values(), labels=chart_data.keys(), **kwargs)
@@ -232,7 +236,10 @@ class Statistics:
         clicks_analysis_dates = {
             date: clicks
             for date, clicks in self.clicks_analysis.items()
-            if datetime.strptime(date, "%Y-%m-%d") >= (datetime.now() - timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
+            if datetime.strptime(date, "%Y-%m-%d")
+            >= (datetime.now() - timedelta(days=days)).replace(
+                hour=0, minute=0, second=0, microsecond=0
+            )
         }
         if not clicks_analysis_dates:
             raise ValueError(f"No data available for the last {days} days.")
@@ -242,7 +249,10 @@ class Statistics:
         unique_clicks_analysis_dates = {
             date: clicks
             for date, clicks in self.unique_clicks_analysis.items()
-            if datetime.strptime(date, "%Y-%m-%d") >= (datetime.now() - timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
+            if datetime.strptime(date, "%Y-%m-%d")
+            >= (datetime.now() - timedelta(days=days)).replace(
+                hour=0, minute=0, second=0, microsecond=0
+            )
         }
         if not unique_clicks_analysis_dates:
             raise ValueError(f"No data available for the last {days} days.")

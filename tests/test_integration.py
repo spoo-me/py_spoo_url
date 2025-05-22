@@ -201,7 +201,7 @@ class TestPasswordProtectedWorkflow:
         # Check shortening call
         first_call = mock_post.call_args_list[0]
         assert first_call[1]["data"]["password"] == "mypassword"
-        assert first_call[1]["data"]["max_clicks"] == 50
+        assert first_call[1]["data"]["max-clicks"] == 50
 
         # Check statistics call
         second_call = mock_post.call_args_list[1]

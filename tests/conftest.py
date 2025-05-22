@@ -88,21 +88,19 @@ def mock_geopandas():
 @pytest.fixture
 def mock_matplotlib():
     """Mock matplotlib functionality for chart testing"""
-    with (
-        mock.patch("matplotlib.pyplot.subplots") as mock_subplots,
-        mock.patch("matplotlib.pyplot.bar") as mock_bar,
-        mock.patch("matplotlib.pyplot.pie") as mock_pie,
-    ):
-        mock_fig, mock_ax = mock.Mock(), mock.Mock()
-        mock_subplots.return_value = (mock_fig, mock_ax)
+    with mock.patch("matplotlib.pyplot.subplots") as mock_subplots:
+        with mock.patch("matplotlib.pyplot.bar") as mock_bar:
+            with mock.patch("matplotlib.pyplot.pie") as mock_pie:
+                mock_fig, mock_ax = mock.Mock(), mock.Mock()
+                mock_subplots.return_value = (mock_fig, mock_ax)
 
-        yield {
-            "subplots": mock_subplots,
-            "bar": mock_bar,
-            "pie": mock_pie,
-            "fig": mock_fig,
-            "ax": mock_ax,
-        }
+                yield {
+                    "subplots": mock_subplots,
+                    "bar": mock_bar,
+                    "pie": mock_pie,
+                    "fig": mock_fig,
+                    "ax": mock_ax,
+                }
 
 
 @pytest.fixture(autouse=True)

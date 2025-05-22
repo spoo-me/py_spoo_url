@@ -289,7 +289,7 @@ class TestInputValidation:
 
             # Verify the negative value was passed (API should handle validation)
             called_args = mock_post.call_args
-            assert called_args[1]["data"]["max_clicks"] == -1
+            assert called_args[1]["data"]["max-clicks"] == "-1"
 
     @pytest.mark.unit
     def test_statistics_short_code_variations(self):

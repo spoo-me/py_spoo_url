@@ -132,12 +132,13 @@ class Statistics:
         matplotlib.rcParams['font.size'] = 15
         matplotlib.rcParams['axes.labelcolor'] = "White"
 
-        world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+        # world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+        world = gpd.read_file("py_spoo_url/data/ne_110m_admin_0_countries.zip")
 
         world = world.merge(
             gpd.GeoDataFrame(self.country_analysis.items(), columns=['Country', 'Value']),
             how='left',
-            left_on='name',
+            left_on='NAME',
             right_on='Country'
         )
 

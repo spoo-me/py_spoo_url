@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="py_spoo_url",
-    version="0.0.6",
+    version="0.0.7",
     description="Simple URL shortening with advanced analytics, emoji aliases, and more using spoo.me.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -28,6 +28,8 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Typing :: Typed",
     ],
     project_urls={"spoo.me Service": "https://spoo.me"},

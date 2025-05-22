@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 class Shortener:
     def __init__(self):
         self.short_code = None
@@ -13,7 +14,6 @@ class Shortener:
         max_clicks: int = None,
         alias: str = None,
     ):
-
         payload = {"url": long_url}
 
         if password:
@@ -38,10 +38,9 @@ class Shortener:
         self,
         long_url: str,
         emoji_alias=None,
-        max_clicks: int= None,
-        password: str=None
+        max_clicks: int = None,
+        password: str = None,
     ):
-
         payload = {"url": long_url}
 
         if password:

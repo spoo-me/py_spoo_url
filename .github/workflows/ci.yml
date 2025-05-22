@@ -30,18 +30,12 @@ jobs:
     - name: Install formatting tools
       run: |
         python -m pip install --upgrade pip
-        pip install ruff black isort
-
-    - name: Check code formatting with black
-      run: black --check py_spoo_url/ tests/
-
-    - name: Check import sorting with isort
-      run: isort --check-only py_spoo_url/ tests/
+        pip install ruff
 
     - name: Lint with Ruff
       run: |
-        ruff check py_spoo_url/ tests/
-        ruff format --check py_spoo_url/ tests/
+        ruff check
+        ruff format --check
 
   test:
     name: Tests

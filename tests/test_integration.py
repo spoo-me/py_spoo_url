@@ -193,7 +193,7 @@ class TestPasswordProtectedWorkflow:
         assert stats.short_code == "secret123"
         assert stats.long_url == "https://www.example.com/private"
         assert stats.password == "mypassword"
-        assert stats.max_clicks == "50"
+        assert stats.max_clicks == 50
 
         # Verify both API calls were made with correct parameters
         assert mock_post.call_count == 2
@@ -201,7 +201,7 @@ class TestPasswordProtectedWorkflow:
         # Check shortening call
         first_call = mock_post.call_args_list[0]
         assert first_call[1]["data"]["password"] == "mypassword"
-        assert first_call[1]["data"]["max-clicks"] == 50
+        assert first_call[1]["data"]["max_clicks"] == 50
 
         # Check statistics call
         second_call = mock_post.call_args_list[1]

@@ -258,18 +258,17 @@ This package is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 ![PyPI](https://img.shields.io/pypi/v/py_spoo_url?style=flat-square)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/spoo-me/py_spoo_url/ci.yml)
+![Codecov](https://img.shields.io/codecov/c/github/spoo-me/py_spoo_url)
 ![Downloads](https://img.shields.io/pypi/dm/py_spoo_url?style=flat-square)
-![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)
 ![Last Commit](https://img.shields.io/github/last-commit/spoo-me/py_spoo_url?style=flat-square)
-
-<a href="https://www.producthunt.com/posts/py-spoo-url?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-py&#0045;spoo&#0045;url" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=437841&theme=dark" alt="py&#0045;spoo&#0045;url - URL&#0032;shortener&#0032;package&#0032;supercharged&#0032;with&#0032;https&#0058;&#0047;&#0047;spoo&#0046;me | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
 ---
 
 <h6 align="center">
 <img src="https://spoo.me/static/images/favicon.png" height=30>
 <br>
-© spoo.me . 2024
+© spoo.me . 2025
 
 All Rights Reserved</h6>
 

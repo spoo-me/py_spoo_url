@@ -128,25 +128,26 @@ class Statistics:
 
         return plt
 
-    def make_countries_heatmap(self, cmap: Literal["YlOrRd", "viridis", "plasma", "inferno", "RdPu_r"] = "YlOrRd"):
+    def _create_heatmap(self, data_analysis, title: str, merge_column: str = 'NAME', 
+                       cmap: Literal["YlOrRd", "viridis", "plasma", "inferno", "RdPu_r"] = "YlOrRd"):
+        """Common function to create country heatmaps"""
         matplotlib.rcParams['font.size'] = 15
         matplotlib.rcParams['axes.labelcolor'] = "White"
 
-        # world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
         world = gpd.read_file("py_spoo_url/data/ne_110m_admin_0_countries.zip")
 
         world = world.merge(
-            gpd.GeoDataFrame(self.country_analysis.items(), columns=['Country', 'Value']),
+            gpd.GeoDataFrame(data_analysis.items(), columns=['Country', 'Value']),
             how='left',
-            left_on='NAME',
+            left_on=merge_column,
             right_on='Country'
         )
 
-        plt.figure(figsize=(15, 10), dpi=100)
-        plt.subplots_adjust(left=0.05, right=0.95, bottom=0.05, top=0.95)
-
-        # Create a figure and axis
+        # Create a figure and axis (single figure creation)
         fig, ax = plt.subplots(1, 1, figsize=(15, 10), facecolor=(32/255, 34/255, 37/255, 0.5))
+        
+        # Apply subplot adjustments to the created figure
+        plt.subplots_adjust(left=0.05, right=0.90, bottom=0.05, top=0.95)
 
         for spine in ax.spines.values():
             spine.set_color((46/255, 48/255, 53/255))
@@ -166,52 +167,25 @@ class Statistics:
         cbax.tick_params(labelcolor='white')
 
         # Set plot title
-        plt.suptitle('Countries Heatmap', x=0.5, y=0.82, fontsize=20, fontweight=3, color='white')
+        plt.suptitle(title, x=0.5, y=0.95, fontsize=20, fontweight=3, color='white')
 
-        # Show the plot
         return plt
+
+    def make_countries_heatmap(self, cmap: Literal["YlOrRd", "viridis", "plasma", "inferno", "RdPu_r"] = "YlOrRd"):
+        return self._create_heatmap(
+            data_analysis=self.country_analysis,
+            title='Countries Heatmap',
+            merge_column='NAME',
+            cmap=cmap
+        )
 
     def make_unique_countries_heatmap(self, cmap: Literal["YlOrRd", "viridis", "plasma", "inferno", "RdPu_r"] = "YlOrRd"):
-        matplotlib.rcParams['font.size'] = 15
-        matplotlib.rcParams['axes.labelcolor'] = "White"
-
-        world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-
-        world = world.merge(
-            gpd.GeoDataFrame(self.unique_country_analysis.items(), columns=['Country', 'Value']),
-            how='left',
-            left_on='name',
-            right_on='Country'
+        return self._create_heatmap(
+            data_analysis=self.unique_country_analysis,
+            title='Unique Countries Heatmap',
+            merge_column='NAME',
+            cmap=cmap
         )
-
-        plt.figure(figsize=(15, 10), dpi=100)
-        plt.subplots_adjust(left=0.05, right=0.95, bottom=0.05, top=0.95)
-
-        # Create a figure and axis
-        fig, ax = plt.subplots(1, 1, figsize=(15, 10), facecolor=(32/255, 34/255, 37/255, 0.5))
-
-        for spine in ax.spines.values():
-            spine.set_color((46/255, 48/255, 53/255))
-            spine.set_linewidth(2)
-
-        ax.tick_params(labelcolor='white')
-
-        # Plot the world map
-        world.boundary.plot(ax=ax, linewidth=1)
-        divider = make_axes_locatable(ax)
-        cax = divider.append_axes("right", size="5%", pad=0.1)
-
-        # Plot the heatmap
-        p = world.plot(column='Value', ax=ax, legend=True, cax=cax, cmap=cmap, edgecolor=None, legend_kwds={'label': "Clicks",}, alpha=0.9)
-        p.set_facecolor((32/255, 34/255, 37/255, 0.5))
-        cbax = cax
-        cbax.tick_params(labelcolor='white')
-
-        # Set plot title
-        plt.suptitle('Unique Countries Heatmap', x=0.5, y=0.82, fontsize=20, fontweight=3, color='white')
-
-        # Show the plot
-        return plt
 
     def last_n_days_analysis(self, days: int = 7):
         clicks_analysis_dates = {

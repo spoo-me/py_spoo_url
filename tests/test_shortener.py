@@ -63,7 +63,7 @@ class TestShortener:
         expected_data = {
             "url": "https://www.example.com",
             "password": "secret123",
-            "max_clicks": 100,
+            "max-clicks": 100,
             "alias": "custom",
         }
         mock_post.assert_called_once_with(
@@ -142,7 +142,7 @@ class TestEmojifyShortener:
         expected_data = {
             "url": "https://www.example.com",
             "emojies": "🎉🚀",
-            "max_clicks": 50,
+            "max-clicks": 50,
             "password": "emoji_pass",
         }
         mock_post.assert_called_once_with(

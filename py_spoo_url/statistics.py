@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timedelta
 import geopandas as gpd  # type: ignore
 from mpl_toolkits.axes_grid1 import make_axes_locatable  # type: ignore
-from typing import Literal, Optional, Dict, Any, Union
+from typing import Literal, Optional, Dict, Any
 import pandas as pd  # type: ignore
 import os
 import shutil

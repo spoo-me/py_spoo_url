@@ -1,19 +1,19 @@
-import matplotlib.pyplot as plt
-import matplotlib
-import requests
+import matplotlib.pyplot as plt  # type: ignore
+import matplotlib  # type: ignore
+import requests  # type: ignore
 import json
 from datetime import datetime, timedelta
-import geopandas as gpd
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-from typing import Literal
-import pandas as pd
+import geopandas as gpd  # type: ignore
+from mpl_toolkits.axes_grid1 import make_axes_locatable  # type: ignore
+from typing import Literal, Optional, Dict, Any, Union
+import pandas as pd  # type: ignore
 import os
 import shutil
 import zipfile
 
 
 class Statistics:
-    def __init__(self, short_code: str, password: str = None):
+    def __init__(self, short_code: str, password: Optional[str] = None):
         short_code = short_code.split("/")[-1]
         self.short_code = short_code
         self.password = password
@@ -21,7 +21,7 @@ class Statistics:
 
         self.get()
 
-    def get(self):
+    def get(self) -> Any:
         url = f"{self._url}{self.short_code}"
 
         params = {"password": self.password} if self.password else None
@@ -90,7 +90,7 @@ class Statistics:
         ] = "bar",
         days: int = 7,
         **kwargs,
-    ):
+    ) -> plt.Figure:
         data_methods = {
             "browsers_analysis": self.browsers_analysis,
             "platforms_analysis": self.platforms_analysis,
@@ -106,7 +106,7 @@ class Statistics:
             "last_n_days_unique_analysis": self.last_n_days_unique_analysis,
         }
         try:
-            data = data_methods[data]
+            selected = data_methods[data]
         except KeyError:
             raise ValueError(
                 "Invalid data type. Valid data types are: {}".format(
@@ -117,32 +117,27 @@ class Statistics:
         matplotlib.rcParams["font.size"] = 15
         matplotlib.rcParams["axes.labelcolor"] = "Black"
 
-        if (
-            data == self.last_n_days_analysis
-            or data == self.last_n_days_unique_analysis
-        ):
-            data = data(days=days)
+        if callable(selected):
+            chart_data = selected(days=days)
+        else:
+            chart_data = selected
 
         if chart_type == "bar":
-            plt.bar(data.keys(), data.values(), **kwargs)
-            if (
-                data == self.last_n_days_analysis
-                or data == self.clicks_analysis
-                or data == self.unique_clicks_analysis
-            ):
+            plt.bar(chart_data.keys(), chart_data.values(), **kwargs)
+            if data in ["last_n_days_analysis", "clicks_analysis", "unique_clicks_analysis"]:
                 plt.xticks(rotation=90)
         elif chart_type == "pie":
-            plt.pie(data.values(), labels=data.keys(), **kwargs)
+            plt.pie(chart_data.values(), labels=chart_data.keys(), **kwargs)
         elif chart_type == "line":
-            plt.plot(data.keys(), data.values(), **kwargs)
+            plt.plot(chart_data.keys(), chart_data.values(), **kwargs)
         elif chart_type == "scatter":
-            plt.scatter(data.keys(), data.values(), **kwargs)
+            plt.scatter(chart_data.keys(), chart_data.values(), **kwargs)
         elif chart_type == "hist":
-            plt.hist(data.values(), **kwargs)
+            plt.hist(list(chart_data.values()), **kwargs)
         elif chart_type == "box":
-            plt.boxplot(data.values(), **kwargs)
+            plt.boxplot(list(chart_data.values()), **kwargs)
         elif chart_type == "area":
-            plt.stackplot(data.keys(), data.values(), **kwargs)
+            plt.stackplot(chart_data.keys(), chart_data.values(), **kwargs)
         else:
             raise Exception(
                 "Invalid chart type. Valid chart types are: bar, pie, line, scatter, hist, box, area"
@@ -152,11 +147,11 @@ class Statistics:
 
     def _create_heatmap(
         self,
-        data_analysis,
+        data_analysis: Dict[str, int],
         title: str,
         merge_column: str = "NAME",
         cmap: Literal["YlOrRd", "viridis", "plasma", "inferno", "RdPu_r"] = "YlOrRd",
-    ):
+    ) -> plt.Figure:
         """Common function to create country heatmaps"""
         matplotlib.rcParams["font.size"] = 15
         matplotlib.rcParams["axes.labelcolor"] = "White"
@@ -214,7 +209,7 @@ class Statistics:
     def make_countries_heatmap(
         self,
         cmap: Literal["YlOrRd", "viridis", "plasma", "inferno", "RdPu_r"] = "YlOrRd",
-    ):
+    ) -> plt.Figure:
         return self._create_heatmap(
             data_analysis=self.country_analysis,
             title="Countries Heatmap",
@@ -225,7 +220,7 @@ class Statistics:
     def make_unique_countries_heatmap(
         self,
         cmap: Literal["YlOrRd", "viridis", "plasma", "inferno", "RdPu_r"] = "YlOrRd",
-    ):
+    ) -> plt.Figure:
         return self._create_heatmap(
             data_analysis=self.unique_country_analysis,
             title="Unique Countries Heatmap",
@@ -233,63 +228,31 @@ class Statistics:
             cmap=cmap,
         )
 
-    def last_n_days_analysis(self, days: int = 7):
+    def last_n_days_analysis(self, days: int = 7) -> Dict[str, int]:
         clicks_analysis_dates = {
-            datetime.strptime(date, "%Y-%m-%d"): clicks
+            date: clicks
             for date, clicks in self.clicks_analysis.items()
+            if datetime.strptime(date, "%Y-%m-%d") >= (datetime.now() - timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
         }
-
-        n_days_ago = (datetime.now() - timedelta(days=days)).replace(
-            hour=0, minute=0, second=0, microsecond=0
-        )
-
-        last_n_days_clicks = {
-            date: clicks
-            for date, clicks in clicks_analysis_dates.items()
-            if date >= n_days_ago
-        }
-
-        if not last_n_days_clicks:
+        if not clicks_analysis_dates:
             raise ValueError(f"No data available for the last {days} days.")
+        return clicks_analysis_dates
 
-        last_n_days_clicks = {
-            date.strftime("%Y-%m-%d"): clicks
-            for date, clicks in last_n_days_clicks.items()
-        }
-
-        return last_n_days_clicks
-
-    def last_n_days_unique_analysis(self, days: int = 7):
+    def last_n_days_unique_analysis(self, days: int = 7) -> Dict[str, int]:
         unique_clicks_analysis_dates = {
-            datetime.strptime(date, "%Y-%m-%d"): clicks
-            for date, clicks in self.unique_clicks_analysis.items()
-        }
-
-        n_days_ago = (datetime.now() - timedelta(days=days)).replace(
-            hour=0, minute=0, second=0, microsecond=0
-        )
-
-        last_n_days_unique_clicks = {
             date: clicks
-            for date, clicks in unique_clicks_analysis_dates.items()
-            if date >= n_days_ago
+            for date, clicks in self.unique_clicks_analysis.items()
+            if datetime.strptime(date, "%Y-%m-%d") >= (datetime.now() - timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
         }
-
-        if not last_n_days_unique_clicks:
+        if not unique_clicks_analysis_dates:
             raise ValueError(f"No data available for the last {days} days.")
-
-        last_n_days_unique_clicks = {
-            date.strftime("%Y-%m-%d"): clicks
-            for date, clicks in last_n_days_unique_clicks.items()
-        }
-
-        return last_n_days_unique_clicks
+        return unique_clicks_analysis_dates
 
     def export_data(
         self,
         filename: str = "export.xlsx",
         filetype: Literal["csv", "xlsx", "json"] = "xlsx",
-    ):
+    ) -> None:
         if filetype == "xlsx":
             self.export_to_excel(filename)
         elif filetype == "json":
@@ -302,7 +265,7 @@ class Statistics:
                 "Invalid file type. Choose either 'csv', 'json' or 'xlsx'."
             )
 
-    def export_to_excel(self, filename: str = "export.xlsx"):
+    def export_to_excel(self, filename: str = "export.xlsx") -> None:
         df_browser = pd.DataFrame(
             self.data["browser"].items(), columns=["Browser", "Count"]
         )
@@ -371,7 +334,7 @@ class Statistics:
 
         print(f"Data successfully written to {filename}")
 
-    def export_to_csv(self, filename: str = "export.csv"):
+    def export_to_csv(self, filename: str = "export.csv") -> None:
         # Create a directory to store CSV files
         csv_directory = "csv_files"
         os.makedirs(csv_directory, exist_ok=True)
@@ -465,8 +428,8 @@ class Statistics:
 
         print(f"Data successfully written to {filename}.zip")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"<Statistics {self.short_code}>"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Statistics {self.short_code}>"

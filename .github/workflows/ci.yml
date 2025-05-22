@@ -76,16 +76,14 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        python -m pytest tests/ --cov=py_spoo_url --cov-report=xml --cov-report=html --cov-fail-under=80
+        python -m pytest tests/ --cov=py_spoo_url --cov-branch --cov-report=xml --cov-report=html --cov-fail-under=80
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
       with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
+        fail_ci_if_error: true
+        token: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Archive test results
       uses: actions/upload-artifact@v4

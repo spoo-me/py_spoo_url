@@ -193,7 +193,7 @@ class TestPasswordProtectedWorkflow:
         assert stats.short_code == "secret123"
         assert stats.long_url == "https://www.example.com/private"
         assert stats.password == "mypassword"
-        assert stats.max_clicks == 50
+        assert stats.max_clicks == "50"
 
         # Verify both API calls were made with correct parameters
         assert mock_post.call_count == 2

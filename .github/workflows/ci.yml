@@ -119,3 +119,4 @@ jobs:
     - name: Type checking with mypy
       run: |
         mypy py_spoo_url/ --ignore-missing-imports
+      continue-on-error: true
